@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prompt Engineering"
+  short_description: "Prompt patterns and reusable templates."
+  default_prompt: "Use $prompt-engineering to design or refine a prompt for this task."

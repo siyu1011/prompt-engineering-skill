@@ -1,6 +1,6 @@
 # Prompt Engineering Toolkit
 
-> 一个面向多种 AI 工具的 Prompt 工具包，内置 Codex、ChatGPT、Claude、Cursor、Dify 适配层。
+> 一个面向多种 AI 工具的 Prompt 工具包，内置 Codex、ChatGPT、Claude、Cursor、Dify 适配层，并提供标准 `skills/` 入口，方便通过 `skills` CLI 安装与分发。
 
 ## 这个仓库是做什么的
 
@@ -17,14 +17,17 @@
 
 Skill 可以理解为给 AI 工具使用的“能力包”。它通常把说明、模板、规则和参考资料组合在一起，让 AI 在一类任务上表现得更稳定。
 
-这个仓库包含两层内容：
+这个仓库包含三层内容：
 
 - 多平台都能直接使用的通用内容
-- 面向具体产品的适配层，用于承接各平台自己的 instructions、rules 或 skill 机制
+- 面向具体产品的适配层
+- 面向 `skills` CLI / `skills.sh` 的标准 skill 入口
 
-通用内容在 `prompts/` 和 `guides/` 下。  
-Codex 专用 skill 在 `integrations/codex/prompt-engineering/` 下。  
-其他平台则使用 `integrations/` 下面各自对应的适配文件。
+对应目录如下：
+
+- `prompts/` 和 `guides/`：平台无关内容
+- `integrations/`：各平台适配层
+- `skills/prompt-engineering/`：标准可安装 skill 入口
 
 ## 快速开始
 
@@ -41,6 +44,18 @@ Codex 专用 skill 在 `integrations/codex/prompt-engineering/` 下。
 - `prompts/reviews/`：Prompt 评审与审计模板
 - `guides/techniques.md`：提示词技术选型
 - `guides/prompt-diffs.md`：“差 Prompt -> 好 Prompt” 对照示例
+
+### 通过 skills CLI 安装
+
+如果你希望通过标准方式安装，或者让 `skills.sh` 更容易发现这个 skill，请使用：
+
+```bash
+npx skills add siyu1011/prompt-engineering-skill --skill prompt-engineering
+```
+
+标准 skill 入口位于：
+
+`skills/prompt-engineering/`
 
 ### 在 Codex 中使用
 
@@ -60,6 +75,7 @@ Codex 专用 skill 在 `integrations/codex/prompt-engineering/` 下。
 
 | 平台 | 适配形式 | 目录 |
 | --- | --- | --- |
+| skills CLI / skills.sh | 标准 skill 目录 | `skills/` |
 | Codex | 原生 skill | `integrations/codex/` |
 | ChatGPT | Custom GPT Instructions | `integrations/chatgpt/` |
 | Claude | Project Instructions | `integrations/claude/` |
@@ -84,6 +100,7 @@ Codex 专用 skill 在 `integrations/codex/prompt-engineering/` 下。
 
 ### 平台适配层
 
+- skills CLI 标准 skill 入口
 - Codex skill
 - ChatGPT Custom GPT 说明
 - Claude Project Instructions
@@ -105,6 +122,8 @@ prompt-engineering-toolkit/
 |- guides/
 |  |- prompt-diffs.md
 |  `- techniques.md
+|- skills/
+|  `- prompt-engineering/
 `- integrations/
    |- chatgpt/
    |- claude/
@@ -133,9 +152,10 @@ prompt-engineering-toolkit/
 
 ### 如果你要分享给团队
 
-可以有两种方式：
+可以有三种方式：
 
 - 分享整个仓库，作为跨平台 Prompt 工具包
+- 分享 `skills/prompt-engineering/`，让对方通过 `skills` CLI 安装
 - 只分享 `integrations/` 下某个平台的目录
 
 ## 典型使用场景
@@ -159,11 +179,12 @@ prompt-engineering-toolkit/
 这个仓库适合这样分享：
 
 - 如果对方想在任意 AI 工具里使用这些 Prompt 资产，就分享整个仓库
+- 如果对方习惯用 `skills` CLI 安装，就分享仓库地址并让对方执行安装命令
 - 如果对方只需要 Codex skill，就分享 `integrations/codex/prompt-engineering/`
 - 如果对方只使用某一个平台，就分享对应的 `integrations/` 子目录
 
 ## 下一步怎么用
 
 1. 先选对应平台或场景目录
-2. 复制一个模板或集成文件
+2. 复制一个模板或集成文件，或者直接用 `skills` CLI 安装
 3. 按你的工作流改掉占位符
